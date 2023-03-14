@@ -1,0 +1,14 @@
+*.Rproj.user
+*.Rhistory
+*.RData
+*.Ruserdata
+*.Rapp.history
+*.Rproj
+*.png
+*.Rds
+.DS_Store
+*.html
+*.pdf
+*.log
+!data.Rdata
+!pheno.Rdata
