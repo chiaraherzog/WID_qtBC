@@ -1,6 +1,6 @@
 ---
-title: "DNA methylation at quantitative trait loci (methylation QTLs) is modulated by cell type and non-heritable factors and may enable improved breast cancer risk assessment"
-author: "Main Figures"
+title: "DNA methylation at quantitative trait loci (mQTLs) varies with cell type and non-heritable factors and may improve breast cancer risk assessment "
+author: "Main Data"
 date: ""
 output:
   pdf_document:
@@ -187,13 +187,13 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 # # cervical v blood: 8.196439e-71
 # # blood v buccal 1.662789e-30
 # 
-# tmp1 <- sd_long |> 
-#   dplyr::filter(set == "all") |> 
-#   dplyr::group_by(tissue, icgroup) |> 
-#   dplyr::summarise(sdmean = mean(sd)) |> 
+# tmp1 <- sd_long |>
+#   dplyr::filter(set == "all") |>
+#   dplyr::group_by(tissue, icgroup) |>
+#   dplyr::summarise(sdmean = mean(sd)) |>
 #   dplyr::filter(icgroup %in% c("All samples", ", 25 % ic"))
 # 
-# sd_long <- sd_long |> 
+# sd_long <- sd_long |>
 #   dplyr::left_join(tmp1, by = c("tissue", "icgroup")) |>
 #   ungroup()
 # 
@@ -202,15 +202,14 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 #   ggplot(aes(x = set,
 #              y = sd,
 #              fill = interaction(icgroup, tissue))) +
-#   geom_boxplot(outlier.size = NA) +
+#   geom_boxplot(outlier.size = 0.1) +
 #   scale_fill_manual(values=c(col[5], alpha(col[5], alpha = 0.8), alpha(col[5], alpha = 0.6), alpha(col[5], alpha = 0.4),  alpha(col[5], alpha = 0.2),
 #                              col[2], alpha(col[2], alpha = 0.8), alpha(col[2], alpha = 0.6), alpha(col[2], alpha = 0.4), alpha(col[2], alpha = 0.2),
 #                              col[1], alpha(col[1], alpha = 0.8), alpha(col[1], alpha = 0.6)),
 #                     name = "") +
 #   facet_wrap(~tissue) +
-#   # geom_hline(aes(yintercept = sdmean,
-#   #                colour = interaction(icgroup, tissue)), linetype = "dashed") +
-#   # geom_hline(aes(yintercept = median2), linetype = "dotted") +
+#   geom_hline(aes(yintercept = median1), linetype = "dashed") +
+#   geom_hline(aes(yintercept = median2), linetype = "dotted") +
 #   theme_bw() +
 #   xlab("") + ylab("standard deviation of CpGs")
 # 
@@ -221,10 +220,12 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 # dev.off()
 ```
 
-\includegraphics{0-figure-panels/fig1.pdf}
+\includegraphics[trim=0 9cm 0 0]{0-figure-panels/fig1.pdf}
 
+\subsection{Figure 1. Identification of the most informative surrogate sample for breast-variable DNA methylation indicates that cervical samples exhibit higher variability in the top-variable breast CpGs compared to matched buccal and blood samples.} \textbf{a} Higher variability indicates the potential presence of more information, opposed to CpGs which are homogeneously methylated or unmethylated across samples. We explored this by identifying variability of CpGs in tissue at risk of breast cancer (=breast tissue) and assessing variability of these top breast-variable CpGs in three non-invasive surrogate tissues, utilising matched buccal, blood, and cervical samples from the same individuals (n=222 per tissue). \textbf{b} Standard deviation of the top variable breast CpGs (1, 2, 5, 10, 15, and 20 percentiles, respectively) in matched cervical, buccal, and blood samples (all ,and separated by inferred immune cell composition). \textbf{c} Variability of all CpGs versus mQTL CpGs in the three matched tissues (all or separated by inferred immune cell composition). The dashed line shows median variability of all CpGs in all cervical samples while the solid line shows median variability of mQTLs in cervical samples with an immune cell composition (ic) < 25%. 
 
-\subsection{Figure 1. Top breast-variable CpGs show higher variability in cervical samples than in matched buccal and blood samples.} \textbf{a} Overview of the work conducted in this study. Information theory postulates that variability of CpGs indicates the potential presence of information, opposed to CpGs which are homogeneously methylated or unmethylated across samples. We initially explored variability of CpGs in tissue at risk of breast cancer (=breast tissue) and compared variability of the top breast-variable CpGs in various surrogate tissues, utilizing matched buccal, blood, and cervical samples from the same individuals. We developed an mQTL-based classifier in cervical samples and assessed its performance in an external validation set of cervical samples as well as in normal breast tissue (from cosmetic surgeries) and normal breast tissue adjacent to triple negative tumours. \textbf{b} The top variable CpGs in breast tissue were selected and assessed in matched tissues from the same individuals (blood, buccal, cervical samples; n = 222 per tissue) accounting for different immune cell proportion contents \textbf{c} Standard deviation of the top variable breast CpGs (1, 2, 5, 10, 15, and 20 percentiles, respectively) in matched cervical, buccal, and blood samples, across different immune cell proportion contents. \textbf{d} Variability of all CpGs versus mQTL CpGs in the three matched tissues. The dashed line shows median variability of all CpGs in cervical samples (overall) while the solid line shows median variability of mQTLs in cervical samples with immune cell proportion of < 25%.
+Boxplot boxes indicate interquartile range. Abbreviations: DNAme, DNA methylation. mQTL, methylation quantitative trait locus. SNP, single nucleotide polymorphism. ic, immune cell. 
+
 
 
 \newpage
@@ -440,9 +441,11 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 # dev.off()
 ```
 
-![](0-figure-panels/fig2.pdf)
+\includegraphics[trim=0 8cm 0 0]{0-figure-panels/fig2.pdf}
 
-\subsection{Figure 2. The WID™-qtBC index distinguishes breast cancer cases and controls.} \textbf{a} The WID™-qtBC index is increased in current breast cancer cases compared to controls in the Validation set (p=1.2e-07 in two-tailed Student’s t-test). \textbf{b} The WID™-qtBC has an AUC of 0.71. Identification of breast cancer cases and controls is unaffected by estrogen receptor status. \textbf{c} Permutation analysis of ridge combination of 704 CpGs assessed in cervical samples indicates that the WID™-qtBC AUC is higher than would be expected by chance in the Validation set. \textbf{d} The WID™-qtBC index is increased in normal tissue adjacent to breast cancer compared to normal breast tissue. \textbf{e} ROC curve for discrimination of normal to normal-adjacent tissue, or normal versus triple negative breast cancer, based on the WID™-qtBC index. 
+\subsection{Figure 2. The WID™-qtBC index distinguishes breast cancer cases and controls in cervical and breast samples.} \textbf{a} Outline of classifier development and validation strategy. \textbf{b} The WID™-qtBC index is increased in cervical samples from current breast cancer cases compared to controls in the validation set (p=1.2e-07 in two-tailed Student’s t-test). \textbf{c} The WID™-qtBC has an AUC of 0.71 and is unaffected by estrogen receptor (ER) status. \textbf{d} Permutation analysis of index training featuring randomly selected CpGs indicates that the WID™-qtBC AUC in the validation set is higher than expected by chance. Shaded area indicates 95% confidence interval from permutation testing. \textbf{e} The WID™-qtBC index is increased in normal tissue adjacent to breast cancer compared to normal breast tissue. \textbf{f} ROC curve for discrimination of normal to normal-adjacent tissue based on the WID™-qtBC index.
+
+Boxplot boxes indicate interquartile range. Abbreviations: AUC, area under the receiver operating characteristic curve. ER-, estrogen receptor negative breast cancer. ER+, estrogen receptor positive breast cancer.
 
 \newpage
 
@@ -649,7 +652,7 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 
 ![](0-figure-panels/fig3.pdf)
 
-\subsection{Figure 3. Association of the WID™-qtBC with the PRS\textsubscript{313} (313 SNP polygenic risk score) and cancer characteristics.} \textbf{a} Pearson correlation of the WID™-qtBC index with the polygenic risk score (PRS) in the Validation set. \textbf{b} ROC curve analysis of the WID™-qtBC index stratified by median PRS group (higher or lower than median) in the Validation set. \textbf{c} Odds ratio of the PRS\textsubscript{313}, WID™-qtBC, or their combination, across different percentile categories for the risk scores. \textbf{d} Association of higher tumour stages with increased PRS313 and WID™-qtBC risk. Assessment of estrogen receptor (ER), progesterone receptor (PR), and human epidermal growth factor receptor 2 (HER2 status), nodal and tumour stage, and tumour grade amongst cases in the Validation set, comparing different risk groups defined in Table 1. Numbers in bars indicate n for each group. p=0.0349 for an association of T2-4 tumours with increasing PRS313 and WID™-qtBC, p=0.0167 for increasing Grade III tumours with increasing PRS313 and WID™-qtBC. p values were derived from logistic regression model using ER status, PR status, HER2 status, nodal stage, tumour stage, and tumour grade as independent variables and risk group as the dependent variable. ER status was not significant.
+\subsection{Figure 3. Association of the WID™-qtBC with the PRS\textsubscript{313} (313 SNP polygenic risk score) and cancer characteristics.} \textbf{a} Pearson correlation of the WID™-qtBC index with the polygenic risk score (PRS) in the Validation set. \textbf{b} ROC curve analysis of the WID™-qtBC index stratified by median PRS group (higher or lower than median) in the Validation set. \textbf{c} Odds ratio of the PRS\textsubscript{313}, WID™-qtBC, or their combination, across different percentile categories for the risk scores. Shading indicates 95% confidence intervals.  \textbf{d} Association of higher tumour stages with increased PRS313 and WID™-qtBC risk. Assessment of estrogen receptor (ER), progesterone receptor (PR), and human epidermal growth factor receptor 2 (HER2 status), nodal and tumour stage, and tumour grade amongst cases in the Validation set, comparing different risk groups defined in Table 1. Numbers in bars indicate n for each group. p=0.0349 for an association of T2-4 tumours with increasing PRS313 and WID™-qtBC, p=0.0167 for increasing Grade III tumours with increasing PRS313 and WID™-qtBC. p values were derived from logistic regression model using ER status, PR status, HER2 status, nodal stage, tumour stage, and tumour grade as independent variables and risk group as the dependent variable. ER status was not significant.
 
 
 \newpage
@@ -790,7 +793,7 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 ![](0-figure-panels/fig4.pdf)
 
 
-\subsection{Figure 4. Dynamic changes of the WID™-qtBC and association with non-genetic characteristics.} \textbf{a} Matched breast biopsy samples in healthy women before and after two months of vitamin or mifepristone treatment. 7/9 (77.8%) women in the mifepristone group showed a reduction in the WID™-qtBC while only 3/11 (27.3%) showed a reduction in the vitamin group.  Association of WID™-qtBC scores in cervical samples in the validation set with \textbf{b} age, \textbf{c} body mass index, \textbf{d} age at menarche, and \textbf{e} age at menopause in cancer cases and controls.
+\subsection{Figure 4. Dynamic changes of the WID™-qtBC and association with non-genetic characteristics.} \textbf{a} Matched breast biopsy samples in healthy women before and after two months of vitamin or mifepristone treatment. 7/9 (77.8%) women in the mifepristone group showed a reduction in the WID™-qtBC while only 3/11 (27.3%) showed a reduction in the vitamin group.  Association of WID™-qtBC scores in cervical samples in the validation set with \textbf{b} age, \textbf{c} body mass index, \textbf{d} age at menarche, and \textbf{e} age at menopause in cancer cases and controls (R indicates Pearson correlation coefficient).
 
 \newpage
 
@@ -803,7 +806,7 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 # disc <- pheno |>
 #   filter(dataset == "discovery set" & !is.na(polygenic_risk_score_bc)) |>
 #   mutate(type = factor(type, levels = c("Control", "Breast cancer"))) |>
-#   droplevels() |> 
+#   droplevels() |>
 #   mutate(grp = case_when(polygenic_risk_score_bc > median(polygenic_risk_score_bc) ~ "high PRS",
 #                          polygenic_risk_score_bc <= median(polygenic_risk_score_bc) ~ "low PRS"),
 #          grp = factor(grp, levels = c("low PRS", "high PRS")),
@@ -816,13 +819,13 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 #                                           "low PRS, high WID-qtBC",
 #                                           "high PRS, high WID-qtBC"))) |>
 #   mutate(type = factor(type, levels = c("Control", "Breast cancer")))
-# disc_data <- ortable(disc$type, disc$group) 
+# disc_data <- ortable(disc$type, disc$group)
 # disc_data$set <- "Discovery set"
 # 
 # val <- pheno |>
 #   filter(dataset == "validation set" & !is.na(polygenic_risk_score_bc)) |>
 #   mutate(type = factor(type, levels = c("Control", "Breast cancer"))) |>
-#   droplevels() |> 
+#   droplevels() |>
 #   mutate(grp = case_when(polygenic_risk_score_bc > median(polygenic_risk_score_bc) ~ "high PRS",
 #                          polygenic_risk_score_bc <= median(polygenic_risk_score_bc) ~ "low PRS"),
 #          grp = factor(grp, levels = c("low PRS", "high PRS")),
@@ -835,7 +838,7 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 #                                           "low PRS, high WID-qtBC",
 #                                           "high PRS, high WID-qtBC"))) |>
 #   mutate(type = factor(type, levels = c("Control", "Breast cancer")))
-# val_data <- ortable(val$type, val$group) 
+# val_data <- ortable(val$type, val$group)
 # val_data$set <- "Validation set"
 # 
 # data <- rbind(disc_data, val_data)
@@ -870,7 +873,7 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 #   tab_style(
 #     style = cell_text(weight = "bold"),
 #     locations = cells_body(
-#       columns = c(OR, 
+#       columns = c(OR,
 #                   `95% CI`,
 #                   p),
 #       rows = p < 0.05)
@@ -883,13 +886,15 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 #               row_group.padding = 2,
 #               row_group.border.right.width = px(10),
 #               summary_row.padding = 2,
-#               table.width = px(600),
+#               table.width = px(700),
 #               table.border.top.color = "white",
 #               row_group.border.top.width = px(1),
 #               row_group.border.bottom.width = px(1),
 #               stub.border.width = px(0),
 #               heading.title.font.size = 14) |>
-# gt::tab_source_note(html("<b>Low</b> and <b>high</b> grouping was defined on median values of the respective risk score in each set. <b>High</b> scores were above the median, while <b>low</b> scores were defined as equal to or below the median."))
+# gt::tab_source_note(html("<b>Low</b> and <b>high</b> grouping was defined on median values of the respective risk score in each set. <b>High</b> scores were above the median, while <b>low</b> scores were defined as equal to or below the median.")) |> 
+#   opt_stylize(style = 3)
+# 
 # 
 # tab |>
 #   gtsave("2-markdown/0-figure-panels/table-1.html")
@@ -899,764 +904,3 @@ Chiara Herzog, Allison Jones, Iona Evans, Michal Zikan, David Cibula, Nadia Harb
 ```
 
 \includegraphics[trim=0 5cm 0 0]{0-figure-panels/table-1.pdf}
-
-\newpage
-
-\section{Extended Data}
-
-\subsection{Extended Data Table 1. Study populations and characteristics.}
-
-```{r s.table1}
-# load("1-analysis-pipeline/0-data/pheno.Rdata")
-# 
-# # prep relevant datasets
-# # Breast variability
-# breast <- pheno |> 
-#   dplyr::filter(dataset == "breast variability set") |> 
-#   dplyr::mutate(type = factor(type, levels = c("Normal", "Normal-adjacent", "BRCA1", "BRCA2")),
-#                 accession = case_when(type == "Normal-adjacent" ~ "EGAD00010002074",
-#                                       type %in% c("BRCA1", "BRCA2") ~ "EGAD00010002075",
-#                                       type == "Normal" ~ "EGAD00010002075")) |> 
-#   droplevels()
-# 
-# breast_summary <- breast %>%
-#   dplyr::group_by(type) %>%
-#   dplyr::summarise(set = dataset,
-#                    tissue = "breast tissue",
-#                    n = paste(n(), " (", round(n()/nrow(breast)*100, 2), "%)", sep = ""),
-#                    age = paste(round(median(age),2), "<br>(", round(quantile(age, 0.25),2), "-", round(quantile(age, 0.75),2), ")", sep = ""),
-#                    menopause = paste(n(), " (", round(n()/n()*100, 2), "%)", sep = ""),
-#                    accession = accession,
-#                    prs = paste(sum(!is.na(polygenic_risk_score_bc))),) %>%
-#   dplyr::distinct()
-# 
-# # Breast mifepristone
-# mife_pheno <- pheno |> 
-#   dplyr::filter(dataset == "breast treatment set") |> 
-#   droplevels() %>%
-#   select(dataset, type, age, menopause, polygenic_risk_score_bc) |> 
-#   dplyr::mutate(accession = "EGAD00010002073")
-# 
-# breast_mife_summary <- mife_pheno %>%
-#   group_by(type) %>%
-#   dplyr::summarise(set = dataset,
-#                    tissue = "breast biopsy",
-#                    n = paste(n(), " (", round(n()/nrow(mife_pheno)*100, 2), "%)", sep = ""),
-#                    age = paste(round(median(age),2), "<br>(", round(quantile(age, 0.25),2), "-", round(quantile(age, 0.75),2), ")", sep = ""),
-#                    menopause = paste(n(), " (100%)", sep = ""),
-#                    accession = accession,
-#                    prs = paste(sum(!is.na(polygenic_risk_score_bc)))) %>%
-#   distinct()
-# 
-# # 3C Discovery
-# tr <- pheno  %>%
-#   dplyr::filter(dataset == "discovery set") |> 
-#   mutate(type = factor(type, levels = c("Control", "Breast cancer")),
-#          accession = "EGAS00001005055") |> 
-#   select(dataset, type, age, menopause, accession, polygenic_risk_score_bc)
-# 
-# tr_summary <- tr %>%
-#   group_by(type) %>%
-#   dplyr::summarise(set = dataset,
-#                    tissue = "cervical sample",
-#                    n = paste(n(), " (", round(n()/nrow(tr)*100, 2), "%)", sep = ""),
-#                    age = paste(round(median(age),2), "<br>(", round(quantile(age, 0.25),2), "-", round(quantile(age, 0.75),2), ")", sep = ""),
-#                    menopause = paste(sum(menopause == "Pre"), " (", 
-#                                      round((sum(menopause == "Pre")/n())*100, 2), "%)", sep = ""),
-#                    accession = accession,
-#                    prs = paste(sum(!is.na(polygenic_risk_score_bc)))) %>%
-#   distinct()
-# 
-# 
-# # 3C validation
-# val <- pheno  %>%
-#   dplyr::filter(dataset == "validation set") |> 
-#   mutate(type = factor(type, levels = c("Control", "Breast cancer")),
-#          accession = "EGAS00001005055") |> 
-#   select(dataset, type, age, menopause, accession, polygenic_risk_score_bc)
-# 
-# val_summary <- val %>%
-#   group_by(type) %>%
-#   dplyr::summarise(set = dataset,
-#                    tissue = "cervical sample",
-#                    n = paste(n(), " (", round(n()/nrow(val)*100, 2), "%)", sep = ""),
-#                    age = paste(round(median(age),2), "<br>(", round(quantile(age, 0.25),2), "-", round(quantile(age, 0.75),2), ")", sep = ""),
-#                    menopause = paste(sum(menopause == "Pre"), " (", 
-#                                      round((sum(menopause == "Pre")/n())*100, 2), "%)", sep = ""),
-#                    accession = accession,
-#                    prs = paste(sum(!is.na(polygenic_risk_score_bc)))) %>%
-#   distinct()
-# 
-# # Matched samples
-# brca <- pheno %>%
-#   dplyr::filter(dataset == "matched surrogate samples" & sampletype == "cervical") |> 
-#   dplyr::mutate(accession = "EGAS00001005626") |> 
-#   select(dataset, type, age, menopause, accession, polygenic_risk_score_bc)
-#   
-# brca_summary <- brca %>%
-#   group_by(type) %>%
-#   dplyr::summarise(set = dataset,
-#                    type = "Healthy volunteer",
-#                    tissue = "cervical, buccal,<br>and blood sample",
-#                    n = paste(n(), " (", round(n()/nrow(brca)*100, 2), "%)", sep = ""),
-#                    age = paste(round(median(age),2), "<br>(", round(quantile(age, 0.25),2), "-", round(quantile(age, 0.75),2), ")", sep = ""),
-#                    menopause = paste(sum(menopause == "Pre"), " (", 
-#                                      round((sum(menopause == "Pre")/n())*100, 2), "%)", sep = ""),
-#                    accession = accession,
-#                    prs = paste(sum(!is.na(polygenic_risk_score_bc)))) %>%
-#   distinct()
-# 
-# # Breast validation
-# breast2 <- pheno |> 
-#   dplyr::filter(dataset == "breast validation set") |> 
-#   dplyr::mutate(type = factor(type, levels = c("Normal", "Normal-adjacent")),
-#                 accession = case_when(type == "Normal-adjacent" ~ "EGAD00010002074<br>GSE133985",
-#                                       type == "Normal" ~ "EGAD00010002075")) |> 
-#   droplevels()
-# 
-# breast_val_summary <- breast2 %>%
-#   dplyr::group_by(type) %>%
-#   dplyr::summarise(set = dataset,
-#                    tissue = "breast tissue",
-#                    n = paste(n(), " (", round(n()/nrow(breast)*100, 2), "%)", sep = ""),
-#                    age = paste(round(median(age),2), "<br>(", round(quantile(age, 0.25),2), "-", round(quantile(age, 0.75),2), ")", sep = ""),
-#                    menopause = paste(n(), " (", round(n()/n()*100, 2), "%)", sep = ""),
-#                    accession = accession,
-#                    prs = paste(sum(!is.na(polygenic_risk_score_bc))),) %>%
-#   dplyr::distinct()
-# 
-# tmp <- rbind(breast_summary,
-#              brca_summary,
-#              tr_summary,
-#              val_summary,
-#              breast_val_summary,
-#              breast_mife_summary)
-# 
-# t1 <- tmp %>%
-#   select(type, set, n, accession, age, tissue, age, menopause, prs) %>%
-#   gt(rowname_col = "type",
-#      groupname_col = "set") %>%
-#   cols_label(
-#     tissue = "Tissue",
-#     accession = "Accession ID",
-#     n = "n",
-#     age = "Age",
-#     menopause = "Premenopausal (%)",
-#     prs = html("PRS₃₁₃<br>available (n)"),
-#   ) %>%
-#   tab_options(column_labels.font.weight = "bold",
-#               row_group.font.weight = "bold",
-#               data_row.padding = 2,
-#               column_labels.font.size = 11,
-#               table.font.size = 9,
-#               row_group.padding = 2,
-#               table.width = px(650),
-#               row_group.border.right.width = px(10),
-#               summary_row.padding = 2,
-#               table.border.top.color = "white",
-#               row_group.border.top.width = px(1),
-#               row_group.border.bottom.width = px(1),
-#               stub.border.width = px(0),
-#               heading.title.font.size = 12)  %>%
-#   text_transform(locations = cells_body(),
-#                  fn = function(x){
-#                    paste0(ifelse(x == "N/A", "-", x))}) |> 
-#   fmt_markdown(columns = TRUE)  |> 
-#   cols_align(align = "left",
-#              columns = everything())
-# 
-# t1 %>%
-#   gtsave("2-markdown/0-figure-panels/s-table-1.html")
-# pagedown::chrome_print("2-markdown/0-figure-panels/s-table-1.html", output = "2-markdown/0-figure-panels/s-table-1.pdf")
-```
-
-\includegraphics[trim=0 5cm 0 0]{0-figure-panels/s-table-1.pdf}
-
-\newpage
-
-\subsection{Extended Data Table 2. Clinical characteristics of cancer cases in the discovery and validation sets.}
-
-```{r s.table2}
-# load("1-analysis-pipeline/0-data/pheno.Rdata")
-# #----------------------
-# # Discovery cancers
-# #----------------------
-# disc <- pheno %>%
-#   dplyr::filter(dataset == "discovery set" & type ==  "Breast cancer")%>%
-#   dplyr::mutate(set = dataset,
-#                 prs = ifelse(is.na(polygenic_risk_score_bc), "SNP data<br>not available", "SNP data<br>available")) %>%
-#   dplyr::select(set, ER, PR, HER2, grade, stage_N, stage_T, prs)
-# 
-# disc <- disc %>%
-#   dplyr::mutate(ER = case_when(ER=="Pos" ~ "ER+",
-#                         ER == "Neg" ~ "ER-",
-#                         is.na(ER) ~ "Unknown"),
-#          PR = case_when(PR=="Pos" ~ "PR+",
-#                         PR=="Neg" ~ "PR-",
-#                         is.na(PR) ~ "Unknown"),
-#          HER2 = case_when(HER2=="Pos" ~ "HER2+",
-#                            HER2=="Neg" ~ "HER2-",
-#                           is.na(HER2) ~ "Unknown"),
-#          grade = ifelse(is.na(grade), "Unknown", grade),
-#          stage_N = ifelse(stage_N %in% c("N", "NX"), "Unknown",
-#                           ifelse(is.na(stage_N), "Unknown", stage_N)),
-#          stage_T = ifelse(stage_T %in% c("T1", "Tis"), "T1",
-#                           ifelse(is.na(stage_T), "Unknown", stage_T))) %>%
-#   dplyr::mutate(ER = factor(ER, levels = c("ER+", "ER-", "Unknown")),
-#          PR = factor(PR, levels = c("PR+", "PR-", "Unknown")),
-#          HER2 = factor(HER2, levels = c("HER2+", "HER-", "Unknown")),
-#          stage_N = factor(stage_N, levels = c("N0", "N1", "N2", "N3", "Unknown")),
-#          stage_T = factor(stage_T, levels = c("T1", "T2", "T3", "T4", "Unknown")),
-#          grade = factor(grade, levels = c("Grade I", "Grade II", "Grade III", "Unknown")),
-#          prs = factor(prs, levels = c("SNP data<br>available", "SNP data<br>not available")))
-# 
-# #----------------------
-# # Validation cancers
-# #----------------------
-# 
-# val <- pheno %>%
-#   dplyr::filter(dataset == "validation set" & type ==  "Breast cancer") %>%
-#   dplyr::mutate(set = dataset,
-#                 prs = ifelse(is.na(polygenic_risk_score_bc), "SNP data<br>not available", "SNP data<br>available")) %>%
-#   dplyr::select(set, prs, ER, PR, HER2, grade, stage_N, stage_T)
-# 
-# val <- val %>%
-#   mutate(ER = case_when(ER=="Pos" ~ "ER+",
-#                         ER == "Neg" ~ "ER-",
-#                         is.na(ER) ~ "Unknown"),
-#          PR = case_when(PR=="Pos" ~ "PR+",
-#                         PR=="Neg" ~ "PR-",
-#                         is.na(PR) ~ "Unknown"),
-#          HER2 = case_when(HER2=="Pos" ~ "HER2+",
-#                           HER2=="Neg" ~ "HER2-",
-#                           is.na(HER2) ~ "Unknown"),
-#          grade = ifelse(is.na(grade), "Unknown", grade),
-#          stage_N = ifelse(stage_N %in% c("N", "NX"), "Unknown",
-#                           ifelse(is.na(stage_N), "Unknown", stage_N)),
-#          stage_T = ifelse(stage_T %in% c("T1", "Tis"), "T1",
-#                           ifelse(is.na(stage_T), "Unknown", stage_T))) %>%
-#   mutate(ER = factor(ER, levels = c("ER+", "ER-", "Unknown")),
-#          PR = factor(PR, levels = c("PR+", "PR-", "Unknown")),
-#          HER2 = factor(HER2, levels = c("HER2+", "HER-", "Unknown")),
-#          stage_N = factor(stage_N, levels = c("N0", "N1", "N2", "N3", "Unknown")),
-#          stage_T = factor(stage_T, levels = c("T1", "T2", "T3", "T4", "Unknown")),
-#          grade = factor(grade, levels = c("Grade I", "Grade II", "Grade III", "Unknown")),
-#          prs = factor(prs, levels = c("SNP data<br>available", "SNP data<br>not available")))
-# 
-# 
-# data <- rbind(disc, val) %>%
-#   mutate(ER = factor(ER, levels = c("ER+", "ER-", "Unknown")),
-#          PR = factor(PR, levels = c("PR+", "PR-", "Unknown")),
-#          HER2 = factor(HER2, levels = c("HER2+", "HER-", "Unknown")),
-#          stage_N = factor(stage_N, levels = c("N0", "N1", "N2", "N3", "Unknown")),
-#          stage_T = factor(stage_T, levels = c("T1", "T2", "T3", "T4", "Unknown")),
-#          grade = factor(grade, levels = c("Grade I", "Grade II", "Grade III", "Unknown")),
-#          prs = factor(prs, levels = c("SNP data<br>available", "SNP data<br>not available")))
-# 
-# tbl <- data |>
-#   dplyr::select(set, prs, ER, PR, HER2, stage_N, stage_T, grade) |>
-#   gtsummary::tbl_strata(strata = "set",
-#                         .tbl_fun =
-#                           ~ .x |>
-#                           tbl_summary(by = prs,
-#                                       label = c(ER ~ "ER status",
-#                                                 PR ~ "PR status",
-#                                                 HER2 ~ "HER2 status",
-#                                                 stage_N ~ "Nodal stage",
-#                                                 stage_T ~ "Tumour stage",
-#                                                 grade ~ "Tumour grade")) |>
-#                           modify_header(update = all_stat_cols() ~html("**{level}**<br>n = {n}")) |>
-#                           modify_footnote(everything() ~ NA) |>
-#                           bold_labels())
-# 
-# 
-# tbl <- tbl %>%
-#   as_gt() %>%
-#   cols_align(align = "left") %>%
-#   tab_options(column_labels.font.weight = "normal",
-#               data_row.padding = 2,
-#               column_labels.font.size = 12,
-#               table.font.size = 12,
-#               row_group.padding = 2,
-#               row_group.border.right.width = px(10),
-#               summary_row.padding = 2,
-#               table.width = px(800),
-#               table.border.top.color = "white",
-#               row_group.border.top.width = px(1),
-#               row_group.border.bottom.width = px(1),
-#               stub.border.width = px(0),
-#               heading.title.font.size = 14)  %>%
-#   text_transform(locations = cells_body(),
-#                  fn = function(x){
-#                    paste0(ifelse(x == "N/A", "-", x))})
-# 
-# 
-# tbl |>
-#   gtsave("2-markdown/0-figure-panels/s-table-2.html")
-# 
-# pagedown::chrome_print("2-markdown/0-figure-panels/s-table-2.html", output = "2-markdown/0-figure-panels/s-table-2.pdf")
-```
-
-\includegraphics[trim=0 4cm 0 0]{0-figure-panels/s-table-2.pdf}
-
-
-\newpage
-
-\subsection{Extended Data Table 3. Information on mQTL CpGs.}
-
-```{r s.table3}
-# library(IlluminaHumanMethylationEPICanno.ilm10b2.hg19)
-# library(rsnps)
-# library(VariantAnnotation)
-# library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-# library(BSgenome.Hsapiens.UCSC.hg19)
-# library(rentrez)
-# txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-# 
-# index <-   readRDS("1-analysis-pipeline/2-output/index_coef.Rds")[-1]
-# mqtl <- readxl::read_xlsx("1-analysis-pipeline/0-data/10549_2021_6185_MOESM1_ESM.xlsx",
-#                           sheet = 6, skip =3)
-# # sum(mqtl$`CpG Site` %in% names(index)) # some are associated with more than one variant
-# 
-# dat <- data.frame(CpG = names(index),
-#                   coefficient = index)
-# 
-# # Get SNP anno for CpGs themselves
-# snps <- getAnnotation(IlluminaHumanMethylationEPICanno.ilm10b2.hg19,
-#                       loci = dat$CpG)
-# dat$`Variant at CpG` <- ""
-# dat$`Variant alleles` <- ""
-# dat$`Variant annotation in ClinVar` <- ""
-# dat$`Variant annotation in OMIM` <- ""
-# dat$`Variant expected protein coding` <- ""
-# 
-# for (i in 1:nrow(snps)){
-#   
-#   if (!is.na(snps$Probe_rs[i])){
-#     # annotate variant at CpG
-#     
-#     snp <- snps$Probe_rs[i]
-#     dat$`Variant at CpG`[i] <- snp
-#     
-#     # Get annotation
-#     snpinfo <- ncbi_snp_query(snp)
-#     dat$`Variant alleles`[i] <- paste0(snpinfo$ancestral_allele, ">", paste0(snpinfo$variation_allele, collapse = ", "))
-#     
-#     # ClinVar/Omim
-#     clvar <- entrez_search(db="clinvar", term = snp)
-#     dat$`Variant annotation in ClinVar`[i] <- ifelse(clvar$count>0, "Yes", "No")
-#     omim <- entrez_search(db="omim", term = snp)
-#     dat$`Variant annotation in OMIM`[i] <- ifelse(omim$count>0, "Yes", "No")
-#     
-#     # make granges for protein coding - number of ranges depends on number of var alleles
-#     snpinfo$chromosome <- paste0("chr", snpinfo$chromosome)
-#     length <- length(stringr::str_split(snpinfo$variation_allele, ",", simplify = TRUE))
-#     
-#     tmp <- data.frame(matrix(nrow = length,
-#                              ncol = 6))
-#     colnames(tmp) <- c("query", "seqnames", "start", "end", "REF", "ALT")
-#     tmp$query <- rep(snpinfo$query, length)
-#     tmp$seqnames <- rep(snpinfo$chromosome, length)
-#     tmp$start <- rep(snpinfo$bp, length)
-#     tmp$end <- rep(snpinfo$bp, length)
-# 
-#     tmp$REF<- rep(snpinfo$ancestral_allele)
-#     tmp$ALT <- unlist(stringr::str_split(snpinfo$variation_allele, ","))
-#     
-#     gr <- makeGRangesFromDataFrame(tmp, start.field = "start", end.field = "end")
-#     gr$REF <- DNAStringSet(tmp$REF)
-#     gr$ALT <- DNAStringSet(tmp$ALT)
-#     names(gr) <- tmp$query
-#     
-#     coding <- predictCoding(gr, txdb, Hsapiens,
-#                             varAllele = gr$ALT)
-#     
-#     if(length(coding) > 0){
-#     dat$`Variant expected protein coding`[i] <- paste0(paste0(unique(as.character(coding$CONSEQUENCE)), collapse = ","), " (",
-#                                                    paste0(unique(as.character(coding$REFCODON)), collapse = ","),
-#                                                    ">",
-#                                                    paste0(unique(as.character(coding$VARCODON), collapse = ", ")),
-#                                                    ")")
-#     }
-#     
-#   }
-#   
-# }
-# 
-# mqtl <- mqtl[mqtl$`CpG Site` %in% dat$CpG,]
-# dupl <- mqtl[duplicated(mqtl$`CpG Site`),]
-# 
-# x <- mqtl %>%
-#   mutate(CpG = `CpG Site`) %>%
-#   group_by(CpG) %>%
-#   summarise(`mQTL Variant` = paste(Variant, collapse = ", "),
-#             `mQTL Variant Gene` = ifelse(length(unique(Symbol...3))==1, paste(Symbol...9),
-#                                     paste(Symbol...3, collapse = ", ")),
-#             `Nearest Gene to CpG` = ifelse(length(unique(Symbol...9))==1, paste(Symbol...9),
-#                                        paste(Symbol...9, collapse = ", ")))
-# 
-# y <- dat %>%
-#   dplyr::full_join(x) 
-# 
-# 
-# xlsx::write.xlsx(y,
-#             file = "2-markdown/0-figure-panels/suppl-table-3.xlsx",
-#            sheetName = "Supplementary Table 3",
-#            row.names = FALSE)
-
-```
-
-
-see supplementary .xlsx file.
-
-\newpage
-
-\subsection{Extended Data Table 4. Stratification by the PRS\textsubscript{313} in the discovery and validation sets.}
-
-```{r s.table4}
-# load("1-analysis-pipeline/0-data/pheno.Rdata")
-# # PRS only
-# # Discovery set
-# dat <- pheno %>%
-#   filter(dataset == "discovery set" & !is.na(polygenic_risk_score_bc)) |> 
-#   mutate(type = factor(type, levels = c("Control", "Breast cancer"))) %>%
-#   droplevels() 
-# 
-# dat <- dat %>%
-#   mutate(grp = case_when(polygenic_risk_score_bc > median(polygenic_risk_score_bc) ~ "high PRS",
-#                          polygenic_risk_score_bc <= median(polygenic_risk_score_bc) ~ "low PRS")) %>%
-#   mutate(grp = factor(grp, levels = c("low PRS", "high PRS"))) %>%
-#   mutate(qtgrp = case_when(index_mQTL > median(index_mQTL) ~ "high WID-qtBC",
-#                            index_mQTL <= median(index_mQTL) ~ "low WID-qtBC")) %>%
-#   mutate(qtgrp = factor(qtgrp, levels = c("low WID-qtBC", "high WID-qtBC"))) %>%
-#   tidyr::unite("group", grp:qtgrp, sep = ", ", remove = FALSE) %>%
-#   mutate(group = factor(group, levels = c("low PRS, low WID-qtBC", "high PRS, low WID-qtBC", "low PRS, high WID-qtBC", "high PRS, high WID-qtBC"))) %>%
-#   mutate(type = factor(type, levels = c("Control", "Breast cancer")))
-# 
-# disc_data <- ortable(dat$type, dat$grp) 
-# disc_data$set <- "Discovery set"
-# 
-# # Validation set
-# 
-# dat <- pheno %>%
-#   filter(dataset == "validation set" & !is.na(polygenic_risk_score_bc)) %>%
-#   mutate(type = factor(type, levels = c("Control", "Breast cancer"))) %>%
-#   droplevels()
-# 
-# dat <- dat %>%
-#   mutate(grp = case_when(polygenic_risk_score_bc > median(polygenic_risk_score_bc) ~ "high PRS",
-#                          polygenic_risk_score_bc <= median(polygenic_risk_score_bc) ~ "low PRS")) %>%
-#   mutate(grp = factor(grp, levels = c("low PRS", "high PRS"))) %>%
-#   mutate(qtgrp = case_when(index_mQTL > median(index_mQTL) ~ "high WID-qtBC",
-#                            index_mQTL <= median(index_mQTL) ~ "low WID-qtBC")) %>%
-#   mutate(qtgrp = factor(qtgrp, levels = c("low WID-qtBC", "high WID-qtBC"))) %>%
-#   tidyr::unite("group", grp:qtgrp, sep = ", ", remove = FALSE) %>%
-#   mutate(group = factor(group, levels = c("low PRS, low WID-qtBC", "high PRS, low WID-qtBC", "low PRS, high WID-qtBC", "high PRS, high WID-qtBC"))) %>%
-#   mutate(type = factor(type, levels = c("Control", "Breast cancer")))
-# val_data <- ortable(dat$type, dat$grp) 
-# val_data$set <- "Validation set"
-# 
-# data <- rbind(disc_data, val_data)
-# data$group <- gsub("PRS", "PRS₃₁₃", data$group)
-# data$p <- as.numeric(data$p)
-# 
-# data %>%
-#   gt(groupname_col = "set") %>%
-#   text_transform(locations = cells_body(
-#     columns = p
-#   ),
-#   fn = function(x){
-#     paste0("p=", x)}
-#   ) %>%
-#   text_transform(locations = cells_body(),
-#                  fn = function(x){
-#                    paste0(ifelse(x == "p=NA", "-",  x))}
-#   ) %>%
-#   cols_label(`group` = "Risk group",
-#              OR = "Odds ratio",
-#              `95% CI` = "95% CI",
-#              p = "p value",
-#              Controls = "Controls (n)",
-#              Cases = "Cases (n)") %>%
-#   cols_align(columns = c(Cases,
-#                          Controls,
-#                          OR,
-#                          `95% CI`,
-#                          p),
-#              align = "left") %>%
-#   tab_style(
-#     style = cell_text(weight = "bold"),
-#     locations = cells_body(
-#       columns = c(OR, 
-#                   `95% CI`,
-#                   p),
-#       rows = p < 0.05)
-#   ) %>%
-#   tab_options(column_labels.font.weight = "bold",
-#               row_group.font.weight = "bold",
-#               data_row.padding = 2,
-#               column_labels.font.size = 12,
-#               table.font.size = 12,
-#               row_group.padding = 2,
-#               row_group.border.right.width = px(10),
-#               summary_row.padding = 2,
-#               table.width = px(600),
-#               table.border.top.color = "white",
-#               row_group.border.top.width = px(1),
-#               row_group.border.bottom.width = px(1),
-#               stub.border.width = px(0),
-#               heading.title.font.size = 14)%>%
-#   gt::tab_source_note(html("<b>Low</b> and <b>high</b> grouping was defined on median values of the PRS₃₁₃ in each set. <b>High</b> scores were above the median, while <b>low</b> scores were defined as equal to or below the median."))%>%
-#   gtsave("2-markdown/0-figure-panels/s-table-4.html")
-# 
-# pagedown::chrome_print("2-markdown/0-figure-panels/s-table-4.html", output = "2-markdown/0-figure-panels/s-table-4.pdf")
-```
-
-\includegraphics[trim=0 5 0 0]{0-figure-panels/s-table-4.pdf}
-
-
-\newpage
-
-\subsection{Extended Data Table 5. Stratification by WID™-qtBC in the validation set.}
-
-```{r s.table5}
-# load("1-analysis-pipeline/0-data/pheno.Rdata")
-# # mQTL only
-# 
-# dat <- pheno %>%
-#   filter(dataset == "validation set" & !is.na(polygenic_risk_score_bc)) %>%
-#   mutate(type = factor(type, levels = c("Control", "Breast cancer"))) %>%
-#   droplevels()
-# 
-# dat <- dat %>%
-#   mutate(grp = case_when(polygenic_risk_score_bc > median(polygenic_risk_score_bc) ~ "high PRS",
-#                          polygenic_risk_score_bc <= median(polygenic_risk_score_bc) ~ "low PRS")) %>%
-#   mutate(grp = factor(grp, levels = c("low PRS", "high PRS"))) %>%
-#   mutate(qtgrp = case_when(index_mQTL > median(index_mQTL) ~ "high WID-qtBC",
-#                            index_mQTL <= median(index_mQTL) ~ "low WID-qtBC")) %>%
-#   mutate(qtgrp = factor(qtgrp, levels = c("low WID-qtBC", "high WID-qtBC"))) %>%
-#   tidyr::unite("group", grp:qtgrp, sep = ", ", remove = FALSE) %>%
-#   mutate(group = factor(group, levels = c("low PRS, low WID-qtBC", "high PRS, low WID-qtBC", "low PRS, high WID-qtBC", "high PRS, high WID-qtBC"))) %>%
-#   mutate(type = factor(type, levels = c("Control", "Breast cancer")))
-# 
-# val_data <- ortable(dat$type, dat$qtgrp) 
-# val_data$set <- "Validation set"
-# data <- val_data
-# data$group <- gsub("WID-qtBC", "WID™-qtBC", data$group)
-# data$p <- as.numeric(data$p)
-# 
-# data %>%
-#   gt(groupname_col = "set") %>%
-#   text_transform(locations = cells_body(
-#     columns = p
-#   ),
-#   fn = function(x){
-#     paste0("p=", x)}
-#   ) %>%
-#   text_transform(locations = cells_body(),
-#                  fn = function(x){
-#                    paste0(ifelse(x == "p=NA", "-",  x))}
-#   ) %>%
-#   cols_label(`group` = "Risk group",
-#              OR = "Odds ratio",
-#              `95% CI` = "95% CI",
-#              p = "p value",
-#              Controls = "Controls (n)",
-#              Cases = "Cases (n)") %>%
-#   cols_align(columns = c(Cases,
-#                          Controls,
-#                          OR,
-#                          `95% CI`,
-#                          p),
-#              align = "left") %>%
-#   tab_style(
-#     style = cell_text(weight = "bold"),
-#     locations = cells_body(
-#       columns = c(OR, 
-#                   `95% CI`,
-#                   p),
-#       rows = p < 0.05)
-#   ) %>%
-#   tab_options(column_labels.font.weight = "bold",
-#               row_group.font.weight = "bold",
-#               data_row.padding = 2,
-#               column_labels.font.size = 12,
-#               table.font.size = 12,
-#               row_group.padding = 2,
-#               row_group.border.right.width = px(10),
-#               summary_row.padding = 2,
-#               table.width = px(600),
-#               table.border.top.color = "white",
-#               row_group.border.top.width = px(1),
-#               row_group.border.bottom.width = px(1),
-#               stub.border.width = px(0),
-#               heading.title.font.size = 14) %>%
-#   gt::tab_source_note(html("<b>Low</b> and <b>high</b> grouping was defined on median values of the WID™-qtBC in each set. <b>High</b> scores were above the median, while <b>low</b> scores were defined as equal to or below the median."))%>%
-#   gtsave("2-markdown/0-figure-panels/s-table-5.html")
-# 
-# pagedown::chrome_print("2-markdown/0-figure-panels/s-table-5.html", output = "2-markdown/0-figure-panels/s-table-5.pdf")
-```
-
-\includegraphics[trim=0 5 0 0]{0-figure-panels/s-table-5.pdf}
-
-\newpage
-
-\includegraphics[trim=0 20cm 0 0]{0-figure-panels/extfig1.pdf}
-\subsection{Extended Data Figure 1. Overview of discovery and validation sets for index development and SNP availability.} 
-Abbreviations: CO, number of controls. BC, number of breast cancer cases. * indicates n for which SNP data is available.
-
-
-\newpage
-
-```{r extfig2}
-# load("1-analysis-pipeline/0-data/pheno.Rdata")
-# # dat <- pheno |>
-# #   dplyr::filter(dataset == "validation set" & !is.na(polygenic_risk_score_bc)) |>
-# #   droplevels() |>
-# #   mutate(type = factor(type, levels = c("Control", "Breast cancer"))) |>
-# #   mutate(grp = case_when(polygenic_risk_score_bc > median(polygenic_risk_score_bc) ~ "high PRS",
-# #                        polygenic_risk_score_bc <= median(polygenic_risk_score_bc) ~ "low PRS")) |>
-# #   mutate(grp = factor(grp, levels = c("low PRS", "high PRS")))
-# #
-# # a <- dat |>
-# #     ggplot(aes(x = age,
-# #                y = index_mQTL,
-# #                colour = grp)) +
-# #     geom_point(size = 0.75,
-# #                alpha = 0.8) +
-# #     geom_smooth(method = "lm", se = F) +
-# #     ggpubr::stat_cor(size = 3,
-# #                      label.y.npc = "bottom") +
-# #     theme(legend.position = "top") +
-# #     scale_colour_manual(values = col[c(3,4)], name = "") +
-# #     ylab("WID™-qtBC")
-# #
-# # b <- dat |>
-# #   ggplot(aes(x = BMI,
-# #              y = index_mQTL,
-# #              colour = grp)) +
-# #   geom_point(size = 0.75,
-# #              alpha = 0.8) +
-# #   geom_smooth(method = "lm", se = F) +
-# #   ggpubr::stat_cor(size = 3,
-# #                    label.y.npc = "bottom") +
-# #   theme(legend.position = "none") +
-# #   scale_colour_manual(values = col[c(3,4)], name = "") +
-# #   ylab("WID™-qtBC") +
-# #   xlab("body mass index")
-# #
-# # c <- dat |>
-# #   ggplot(aes(x = age_at_menarche,
-# #              y = index_mQTL,
-# #              colour = grp)) +
-# #   geom_point(size = 0.75,
-# #              alpha = 0.8) +
-# #   geom_smooth(method = "lm", se = F) +
-# #   ggpubr::stat_cor(size = 3,
-# #                    label.y.npc = "bottom") +
-# #   theme(legend.position = "none") +
-# #   scale_colour_manual(values = col[c(3,4)], name = "") +
-# #   ylab("WID™-qtBC") +
-# #   xlab("age at menarche")
-# #
-# # d <- dat |>
-# #   dplyr::filter(menopause == "Post" & !is.na(menopause)) |>
-# #   ggplot(aes(x = age_at_menopause,
-# #              y = index_mQTL,
-# #              colour = grp)) +
-# #   geom_point(size = 0.75,
-# #              alpha = 0.8) +
-# #   geom_smooth(method = "lm", se = F) +
-# #   ggpubr::stat_cor(size = 3,
-# #                    label.y.npc = "bottom") +
-# #   theme(legend.position = "none") +
-# #   scale_colour_manual(values = col[c(3,4)], name = "") +
-# #   ylab("WID™-qtBC") +
-# #   xlab("age at menopause")
-# 
-# # Fig e age+prs ----------------
-# pheno2 <- pheno |>
-#   filter(dataset == "validation set" & !is.na(polygenic_risk_score_bc)) |>
-#   dplyr::mutate(type = factor(type, levels = c("Control", "Breast cancer"))) |>
-#   droplevels() |>
-#   dplyr::mutate(agegroup = case_when(age >= median(age) ~ "age above median\n(≥53.3 years)",
-#                                      age < median(age) ~ "age below median\n(<53.3 years)"),
-#                 grp = case_when(polygenic_risk_score_bc <= quantile(polygenic_risk_score_bc, probs = 0.25) ~ "lowest quartile",
-#                                 polygenic_risk_score_bc > quantile(polygenic_risk_score_bc, probs = 0.25) & polygenic_risk_score_bc <= quantile(polygenic_risk_score_bc, probs = 0.5) ~ "second quartile",
-#                                 polygenic_risk_score_bc > quantile(polygenic_risk_score_bc, probs = 0.5) & polygenic_risk_score_bc <= quantile(polygenic_risk_score_bc, probs = 0.75) ~ "third quartile",
-#                                 polygenic_risk_score_bc >= quantile(polygenic_risk_score_bc, probs = 0.75) ~ "highest quartile")) |>
-#   mutate(grp = factor(grp, levels = c("lowest quartile", "second quartile", "third quartile",
-#                                       "highest quartile")),
-#          agegroup = factor(agegroup, levels = c("age below median\n(<53.3 years)", "age above median\n(≥53.3 years)")))
-# 
-# # Line and n
-# tmp <- pheno2 |>
-#   group_by(agegroup, grp) |>
-#   dplyr::summarise(n = paste0("(", n(), ")")) |>
-#   ungroup()
-# 
-# med1 <- pheno2 |>
-#   dplyr::filter(agegroup == "age below median\n(<53.3 years)" & grp == "lowest quartile") |>
-#   pull(index_mQTL) |>
-#   median()
-# 
-# med2 <- pheno2 |>
-#   dplyr::filter(agegroup != "age below median\n(<53.3 years)" & grp == "lowest quartile") |>
-#   pull(index_mQTL) |>
-#   median()
-# 
-# pheno2 <- pheno2 |>
-#   dplyr::left_join(tmp, by = c("agegroup", "grp")) |>
-#   dplyr::mutate(med = ifelse(agegroup == "age below median\n(<53.3 years)", med1, med2))
-# 
-# e <- pheno2 |>
-#   ggplot(aes(grp,
-#              y = index_mQTL)) +
-#   geom_violin(aes(fill = grp),
-#               alpha = 0.2) +
-#   geom_boxplot(width = 0.1) +
-#   ggbeeswarm::geom_beeswarm(aes(colour = grp),
-#                             size = 0.6,
-#                             alpha = 0.5) +
-#   facet_wrap(~agegroup,
-#              nrow = 1) +
-#   scale_fill_manual(values = col[c(3,4,2,1)],
-#                     aesthetics = c("colour", "fill")) +
-#   theme(legend.position = "none",
-#         axis.text.x = element_text(angle = 90,
-#                                    hjust = 1),
-#         aspect.ratio = 1.5) +
-#   # facet_wrap(~dataset, labeller = labeller(dataset = labs)) +
-#   xlab("") +
-#   ylab("WID™-qtBC")  +
-#   geom_text(aes(y = -5.5,
-#                 label = n),
-#             size = 3, colour = "grey40",
-#             check_overlap = T) +
-#   ggpubr::stat_compare_means(ref.group = "lowest quartile",
-#                              label = "p.format", hide.ns = T,
-#                              colour = "grey40",
-#                              size = 2.4,
-#                              label.y.npc = 0.93) +
-#   geom_hline(aes(yintercept = med),
-#              linetype = "dashed",
-#              colour = "grey60")
-# 
-# # design <- "
-# # AABBCC
-# # DDEEE#
-# # "
-# #
-# # plot <- (a+b+c+d+e) + plot_annotation(tag_levels = "a")  + plot_layout(design = design)
-# #
-# # grDevices::cairo_pdf("2-markdown/0-figure-panels/extfig2.pdf", width = 8, height = 8.5)
-# # print(plot)
-# # dev.off()
-# 
-# grDevices::cairo_pdf("2-markdown/0-figure-panels/extfig2.pdf", width = 4.5, height = 5)
-# print(e)
-# dev.off()
-```
-
-\includegraphics{0-figure-panels/extfig2.pdf}
-\subsection{Extended Data Figure 2. Association of genetic and non-genetic factors on WID™-qtBC.} Stratification by age and PRS\textsubscript{313} levels in the external validation set reveals that a higher PRS\textsubscript{313} drives a higher mQTL-based risk particularly in younger age (p = 0.017 comparison to lowest quartile in younger age group).

@@ -6,31 +6,40 @@ library(dplyr)
 library(here)
 
 # 1.1 Breast data variability ------------------------
-# Datasets EGAD00010002074, EGAD00010002075, EGAD00010002076
-
+# Datasets EGAD00010002074, EGAD00010002075, EGAD00010002076, GSE133985
 load("~/Dropbox/data/tissue-at-risk/beta_merged.Rdata") # load methylation beta matrix (after eutopsQC)
-load("~/Documents/Work/data.nosync/GEO/GSE133985/beta.Rdata")
-intersect <- intersect(rownames(beta_merged), rownames(beta))
-
 load("1-analysis-pipeline/0-data/data.Rdata") # load pheno file
-
 dat <- data |> # grab samples of interest
-  dplyr::filter(dataset == "breast variability set") |> 
+  dplyr::filter(dataset == "breast variability set" & basename %in% colnames(beta_merged)) |> 
   droplevels()
+beta1 <- beta_merged[,match(dat$basename, colnames(beta_merged))] # subset beta
+identical(dat$basename, colnames(beta1))
 
-table(dat$type) # normal, normal adjacent and BRCA1/2 mut carrier samples
-beta <- beta_merged
-beta <- beta[,match(dat$basename, colnames(beta))] # subset beta if necessary
-identical(dat$basename, colnames(beta)) # check identical
+load("~/Documents/Work/data.nosync/GEO/GSE133985/beta.Rdata")
+n <- paste0(stringr::str_split(colnames(beta), "_", simplify = T)[,2], "_", stringr::str_split(colnames(beta), "_", simplify = T)[,3])
+dat <- data |> 
+  dplyr::filter(dataset == "breast variability set" & basename %in% n)
+beta <- beta[,match(dat$basename, n)]
+
+# Merge with GEO EPIC dataset
+intersect <- intersect(rownames(beta_merged), rownames(beta))
+beta <- cbind(beta1[intersect,],
+              beta[intersect,])
+ncol(beta) # 50 samples
 
 sd_breast <- matrixStats::rowSds(as.matrix(beta)) # get cpg-level standard deviation
 names(sd_breast) <- rownames(beta) # append names
+# save interim file for overall variability
+save(sd_breast, file = "1-analysis-pipeline/1-output/sd_breast_all.Rdata")
+
+
 thresholds <- sapply(c(0.99, 0.98, 0.95, 0.9, 0.85, 0.8), function(i){quantile(sd_breast, i)}) # select top pgs
 top_cpgs <- list() # generate list variable
 for(i in 1:length(thresholds)){
   top_cpgs[[i]] <-  names(sd_breast)[sd_breast>thresholds[i]]
 }
 
+ 
 sd_breast <- data.frame(sd_breast = sd_breast) |> # create a flag for top cpgs
   tibble::rownames_to_column("cg") |> 
   dplyr::filter(cg %in% top_cpgs[[6]]) |> 
@@ -213,3 +222,31 @@ save(variability, file = "1-analysis-pipeline/1-output/variability_breast_matche
 
 # save sd variabilities for plotting (Fig 1)
 save(sd_tissues, file = "1-analysis-pipeline/1-output/sd_tissues.Rdata")
+
+# 2. Breast variability: TCGA and GEO (reviewer comments; excluded from main manuscript)
+
+# Load betas
+# TCGA
+load("~/Dropbox/data/tcga/TCGA-BRCA/beta.Rdata")
+ids <- readRDS("1-analysis-pipeline/0-data/tcga_ids.Rds") # Filter by Barcodes
+beta_tcga <- beta[,ids$barcode1]
+# identical(ids$barcode1, colnames(beta_tcga))
+
+load("~/Dropbox/data/450k_breast/beta_merged.Rdata")
+ids <- readRDS("1-analysis-pipeline/0-data/geo_ids.Rds") # Filter by Barcodes
+beta_geo <- beta_merged[,rownames(ids)]
+# identical(rownames(ids), colnames(beta_geo))
+
+# Get intersects for all
+intersect <- intersect(rownames(beta_tcga), rownames(beta_geo))
+
+# Merge
+beta <- cbind(beta_tcga[intersect,], beta_geo[intersect,])
+
+# Sd
+sd_breast <- matrixStats::rowSds(as.matrix(beta)) # get cpg-level standard deviation
+names(sd_breast) <- rownames(beta) # append names
+
+sd_breast_set2 <- sd_breast
+save(sd_breast_set2, file = "1-analysis-pipeline/1-output/sd_breast_set2.Rdata") # save outpout
+
