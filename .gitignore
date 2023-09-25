@@ -11,5 +11,4 @@
 *.pdf
 *.log
 !data.Rdata
-!pheno.Rdata
 .Rproj.user
